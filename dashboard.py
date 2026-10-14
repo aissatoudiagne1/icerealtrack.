@@ -33,8 +33,11 @@ DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", "5432")
 DB_NAME = os.getenv("DB_NAME", "isra_ble")
 
+from sqlalchemy.engine import URL
 engine = create_engine(
-    f"postgresql+psycopg2://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    URL.create("postgresql+psycopg2", username=DB_USER, password=DB_PASSWORD, host=DB_HOST, port=int(DB_PORT), database=DB_NAME),
+    pool_pre_ping=True, pool_recycle=300,
+    connect_args=({"sslmode": "require"} if DB_HOST not in ("localhost", "127.0.0.1") else {}),
 )
 
 def hash_mdp(mot_de_passe, sel):

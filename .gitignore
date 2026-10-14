@@ -1,0 +1,11 @@
+.env
+venv/
+__pycache__/
+*.log
+*.sql
+*.sql.gz
+*.dump
+.streamlit/secrets.toml
+.env
+__pycache__/
+*.bak*
